@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import './Matches.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBaseballBatBall, faFutbol, faPersonHiking } from '@fortawesome/free-solid-svg-icons'
 
 export default function Matches() {
   return (
@@ -32,9 +34,10 @@ export default function Matches() {
 
       <section className="matches-panel">
         <div className="matches-illustration" aria-hidden="true">
-          <span>💜</span>
-          <span>✨</span>
-          <span>🌈</span>
+          <span><FontAwesomeIcon icon={faPersonHiking} />
+          </span>
+          <span><FontAwesomeIcon icon={faBaseballBatBall} /></span>
+          <span><FontAwesomeIcon icon={faFutbol} /></span>
         </div>
 
         <h2>Your matching adventure awaits!</h2>

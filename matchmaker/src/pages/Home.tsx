@@ -620,17 +620,19 @@ export default function Home() {
           </div>
 
           <h1 className="arc-title">
-            Your next
+            Find friends
             <br />
-            favorite is
+            to join in the sports you love
             <br />
-            <span className="arc-gradient-text">out there.</span>
+            <span className="arc-gradient-text">at UCI!</span>
           </h1>
 
           <p className="arc-description">
-            Good connections start with the things you love.
-            Explore your interests, discover new possibilities,
-            and find matches that feel like you.
+            Ever get sad when you can't find people to play with? 
+           Arc-Finder is here to help! 
+            Building social connections by starting with the things you love.
+            Explore your interests, meet new students,
+            and improve your health.
           </p>
 
           <div className="arc-actions">
@@ -667,7 +669,7 @@ export default function Home() {
 
           <div className="arc-feature-card">
             <div className="arc-card-top">
-              <span className="arc-card-label">A LITTLE SOMETHING FOR YOU</span>
+              <span className="arc-card-label">MATCH WITH STUDENTS FROM UCI</span>
               <span className="arc-sparkle" aria-hidden="true">✦</span>
             </div>
 
@@ -683,12 +685,12 @@ export default function Home() {
 
             <h2 className="arc-match-title">Your kind of connection.</h2>
             <p className="arc-match-subtitle">
-              Different stories, shared interests, and a little bit of magic.
+              All different types of majors, age groups, and experiences.
             </p>
 
             <div className="arc-tags">
-              <span className="arc-tag">✦ Shared interests</span>
-              <span className="arc-tag">♡ New discoveries</span>
+              <span className="arc-tag">✦ Share interests</span>
+              <span className="arc-tag">♡ Connect with others</span>
             </div>
           </div>
         </div>
@@ -697,9 +699,9 @@ export default function Home() {
       <section className="arc-features" id="features">
         <div className="arc-section-inner">
           <div className="arc-section-heading">
-            <h2>A little more <span className="arc-gradient-text">you.</span></h2>
+            <h2>A space for <span className="arc-gradient-text">you.</span></h2>
             <p>
-              Finding what fits you should feel exciting, not overwhelming.
+              Finding friends for sports you enjoy should feel exciting, not overwhelming.
             </p>
           </div>
 
@@ -712,10 +714,9 @@ export default function Home() {
               >
                 <FontAwesomeIcon icon={faBasketballBall} />
               </div>
-              <h3>Discover your vibe</h3>
+              <h3>Discover your group</h3>
               <p>
-                Show off the interests and tags that make you unique.
-                Your next discovery might be closer than you think.
+             Your next friend might be closer than you think.
               </p>
             </article>
 
@@ -729,8 +730,8 @@ export default function Home() {
               </div>
               <h3>Find your matches</h3>
               <p>
-                Explore the matching experience and uncover connections
-                through the things you have in common.
+                Explore matching making and find new friends
+                through the things you enjoy.
               </p>
             </article>
 
@@ -745,16 +746,16 @@ export default function Home() {
               <h3>Make it yours</h3>
               <p>
                 Create a profile that reflects your personality
-                and gives your discoveries a personal touch.
+                and sport.
               </p>
             </article>
           </div>
 
           <div className="arc-bottom-cta">
-            <h2>Ready to find your next <span className="arc-gradient-text">favorite?</span></h2>
+            <h2>Ready to find your next <span className="arc-gradient-text">match?</span></h2>
             <p>
-              Your interests are a great place to start.
-              Let's see what you discover.
+              Your favorite sports is a great place to start.
+              Let's see what who you can discover.
             </p>
             <a className="arc-button arc-primary" href="/matches">
               Let's explore <span aria-hidden="true">✦</span>
@@ -768,7 +769,7 @@ export default function Home() {
           <span className="arc-logo" style={{ width: 32, height: 32, borderRadius: 11, fontSize: 18 }} aria-hidden="true">✳</span>
           Arc-Finder
         </a>
-        <span>Made with a little curiosity and a lot of heart ♡</span>
+        <span>All rights reserved. 2026 </span>
       </footer>
     </main>
   );

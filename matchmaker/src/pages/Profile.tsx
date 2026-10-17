@@ -74,6 +74,7 @@ export default function Profile() {
         }
 
         .profile-heading p {
+          margin-top: 30px;
           color: var(--muted);
           font-size: 1.05rem;
           line-height: 1.7;
