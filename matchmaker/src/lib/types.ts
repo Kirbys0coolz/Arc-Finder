@@ -12,4 +12,5 @@ export type NewProfile = Omit<Profile, 'id'>
 
 export type Match = Profile & {
   similarity: number
+  reasons: string[]
 }
