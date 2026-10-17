@@ -1,6 +1,18 @@
 export default function Home() {
   return (
     <main className="arc-home">
+
+      {/* Opening intro screen */}
+      <section className="arc-intro">
+        <img
+          src="/arc-entrance.jpg"
+          alt="Welcome to the Anteater Recreation Center"
+          className="Anteater Recreation Center"
+        />
+        <h1>Welcome to Arc-Finder</h1>
+        <p className="arc-intro-hint">↓ Scroll to explore</p>
+      </section>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -30,6 +42,63 @@ export default function Home() {
           color: var(--ink);
           background: var(--bg);
           font-family: 'DM Sans', sans-serif;
+        }
+
+        .arc-intro {
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          padding: 32px 24px;
+          text-align: center;
+          background: var(--bg);
+          animation: arcIntroEnter 1.1s ease-out both;
+        }
+
+        .arc-intro-image {
+          display: block;
+          width: min(100%, 1100px);
+          max-height: 70vh;
+          object-fit: contain;
+          border-radius: 20px;
+          box-shadow: 0 20px 60px var(--shadow);
+        }
+
+        .arc-intro h1 {
+          margin: 0;
+          color: var(--ink);
+          font: 700 clamp(28px, 4vw, 48px)/1.15 'Space Grotesk', sans-serif;
+        }
+
+        .arc-intro-hint {
+          margin: 0;
+          color: var(--muted);
+          font-size: 14px;
+          animation: arcHintPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes arcIntroEnter {
+          from {
+            opacity: 0;
+            transform: translateY(36px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes arcHintPulse {
+          0%, 100% {
+            opacity: .6;
+            transform: translateY(0);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(5px);
+          }
         }
 
         .arc-home * { box-sizing: border-box; }
