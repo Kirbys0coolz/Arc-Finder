@@ -2,17 +2,18 @@ export default function Home() {
   return (
     <main className="arc-home">
 
-      {/* Opening intro screen */}
+      {/* Opening intro screen – photo fills the screen behind the title */}
       <section className="arc-intro">
         <img
           src="/arc-entrance.jpg"
-          alt="Welcome to the Anteater Recreation Center"
-          className="Anteater Recreation Center"
+          alt=""
+          className="arc-intro-image"
         />
-        <h1>Welcome to Arc-Finder</h1>
-        <p className="arc-intro-hint">↓ Scroll to explore</p>
+        <div className="arc-intro-content">
+          <h1>Welcome to Arc-Finder</h1>
+          <p className="arc-intro-hint">↓ Scroll to explore</p>
+        </div>
       </section>
-
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -44,61 +45,74 @@ export default function Home() {
           font-family: 'DM Sans', sans-serif;
         }
 
+
         .arc-intro {
+          position: relative;
           min-height: 100svh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
+          display: grid;
+          place-items: center;
           padding: 32px 24px;
           text-align: center;
-          background: var(--bg);
-          animation: arcIntroEnter 1.1s ease-out both;
+          overflow: hidden;
+          isolation: isolate;
+          background: var(--ink);   /* shows while the photo loads */
         }
 
+        /* The photo, stretched to cover the whole intro screen */
         .arc-intro-image {
-          display: block;
-          width: min(100%, 1100px);
-          max-height: 70vh;
-          object-fit: contain;
-          border-radius: 20px;
-          box-shadow: 0 20px 60px var(--shadow);
+          position: absolute;
+          inset: 0;
+          z-index: -2;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+          animation: arcIntroZoom 1.6s ease-out both;
         }
 
-        .arc-intro h1 {
-          margin: 0;
-          color: var(--ink);
-          font: 700 clamp(28px, 4vw, 48px)/1.15 'Space Grotesk', sans-serif;
+        /* Dark-green wash over the photo so the white title is readable */
+        .arc-intro::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          background: linear-gradient(180deg, rgba(20, 38, 28, .35), rgba(20, 38, 28, .7));
         }
 
-        .arc-intro-hint {
+        .arc-intro-content {
+          display: grid;
+          gap: 20px;
+          animation: arcIntroEnter 1.1s ease-out .2s both;
+        }
+
+        .arc-home .arc-intro h1 {
           margin: 0;
-          color: var(--muted);
+          color: #FFFFFF;
+          font: 700 clamp(36px, 6vw, 72px)/1.1 'Space Grotesk', sans-serif;
+          letter-spacing: -1.5px;
+          text-shadow: 0 4px 24px rgba(0, 0, 0, .35);
+        }
+
+        .arc-home .arc-intro-hint {
+          margin: 0;
+          color: rgba(255, 255, 255, .85);
           font-size: 14px;
           animation: arcHintPulse 1.8s ease-in-out infinite;
         }
 
         @keyframes arcIntroEnter {
-          from {
-            opacity: 0;
-            transform: translateY(36px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(36px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes arcIntroZoom {
+          from { transform: scale(1.08); }
+          to   { transform: scale(1); }
         }
 
         @keyframes arcHintPulse {
-          0%, 100% {
-            opacity: .6;
-            transform: translateY(0);
-          }
-          50% {
-            opacity: 1;
-            transform: translateY(5px);
-          }
+          0%, 100% { opacity: .6; transform: translateY(0); }
+          50%      { opacity: 1;  transform: translateY(5px); }
         }
 
         .arc-home * { box-sizing: border-box; }
