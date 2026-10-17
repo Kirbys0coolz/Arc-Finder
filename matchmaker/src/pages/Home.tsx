@@ -1,21 +1,113 @@
-
 export default function Home() {
   return (
     <main className="arc-home">
+
+      {/* Opening intro screen */}
+      <section className="arc-intro">
+        <img
+          src="/arc-entrance.jpg"
+          alt="Welcome to the Anteater Recreation Center"
+          className="Anteater Recreation Center"
+        />
+        <h1>Welcome to Arc-Finder</h1>
+        <p className="arc-intro-hint">↓ Scroll to explore</p>
+      </section>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
         .arc-home {
-          --ink: #292044;
-          --muted: #77718c;
+          /* ── Palette ── change these to re-theme the whole page */
+          --bg: #F6FBF7;
+          --surface: #FFFFFF;
+          --ink: #14261C;
+          --muted: #5F7367;
+          --primary: #2F7D57;          /* placeholder – swap in your Primary hex */
+
+          /* Derived shades – plain hex so every browser supports them */
+          --primary-strong: #1F5C3F;
+          --primary-light: #3E9A6B;
+          --tint-1: #E6F2EA;
+          --tint-2: #D3E8DA;
+          --tint-3: #BFDDC9;
+          --border: #D8E8DD;
+          --glow: rgba(47, 125, 87, .25);
+          --shadow: rgba(20, 38, 28, .12);
+          --glass: rgba(255, 255, 255, .88);
+          --glass-line: rgba(255, 255, 255, .7);
+
           min-height: 100vh;
           overflow: hidden;
+          color-scheme: light;
           color: var(--ink);
-          background: #fffaff;
+          background: var(--bg);
           font-family: 'DM Sans', sans-serif;
         }
 
+        .arc-intro {
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          padding: 32px 24px;
+          text-align: center;
+          background: var(--bg);
+          animation: arcIntroEnter 1.1s ease-out both;
+        }
+
+        .arc-intro-image {
+          display: block;
+          width: min(100%, 1100px);
+          max-height: 70vh;
+          object-fit: contain;
+          border-radius: 20px;
+          box-shadow: 0 20px 60px var(--shadow);
+        }
+
+        .arc-intro h1 {
+          margin: 0;
+          color: var(--ink);
+          font: 700 clamp(28px, 4vw, 48px)/1.15 'Space Grotesk', sans-serif;
+        }
+
+        .arc-intro-hint {
+          margin: 0;
+          color: var(--muted);
+          font-size: 14px;
+          animation: arcHintPulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes arcIntroEnter {
+          from {
+            opacity: 0;
+            transform: translateY(36px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes arcHintPulse {
+          0%, 100% {
+            opacity: .6;
+            transform: translateY(0);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(5px);
+          }
+        }
+
         .arc-home * { box-sizing: border-box; }
+
+        /* Shield the page from global/dark-mode styles (e.g. globals.css setting
+           h1, p or body text to white). Must stay above the component rules. */
+        .arc-home :where(h1, h2, h3, h4, h5, h6, p, span, div, li, small, strong, em, label, article, section, header, footer, nav) {
+          color: inherit;
+        }
         .arc-home a { text-decoration: none; }
         .arc-home button, .arc-home a { -webkit-tap-highlight-color: transparent; }
 
@@ -44,9 +136,9 @@ export default function Home() {
           display: grid;
           place-items: center;
           border-radius: 15px;
-          color: white;
-          background: linear-gradient(135deg, #8c67f6, #ff77b7);
-          box-shadow: 0 7px 18px #b39bfa55;
+          color: var(--surface);
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          box-shadow: 0 7px 18px var(--glow);
           font-size: 24px;
         }
 
@@ -57,13 +149,13 @@ export default function Home() {
         }
 
         .arc-nav-links a {
-          color: #625a78;
+          color: var(--muted);
           font-size: 14px;
           font-weight: 600;
           transition: color .2s;
         }
 
-        .arc-nav-links a:hover { color: #885cf5; }
+        .arc-nav-links a:hover { color: var(--primary); }
 
         .arc-nav-cta, .arc-button {
           display: inline-flex;
@@ -72,8 +164,8 @@ export default function Home() {
           gap: 9px;
           border: 0;
           border-radius: 15px;
-          background: #33254f;
-          color: white !important;
+          background: var(--ink);
+          color: var(--surface) !important;
           font-weight: 700;
           transition: transform .2s, box-shadow .2s;
         }
@@ -83,7 +175,12 @@ export default function Home() {
 
         .arc-nav-cta:hover, .arc-button:hover {
           transform: translateY(-3px);
-          box-shadow: 0 10px 25px #33254f30;
+          box-shadow: 0 10px 25px var(--shadow);
+        }
+
+        .arc-nav-cta:focus-visible, .arc-button:focus-visible, .arc-nav-links a:focus-visible, .arc-brand:focus-visible {
+          outline: 2px solid var(--primary);
+          outline-offset: 3px;
         }
 
         .arc-hero {
@@ -101,10 +198,10 @@ export default function Home() {
           align-items: center;
           gap: 8px;
           padding: 9px 14px;
-          border: 1px solid #eee3ff;
+          border: 1px solid var(--border);
           border-radius: 999px;
-          background: #f5eeff;
-          color: #7850d5;
+          background: var(--tint-1);
+          color: var(--primary-strong);
           font-size: 12px;
           font-weight: 800;
           letter-spacing: .2px;
@@ -113,7 +210,7 @@ export default function Home() {
         .arc-pulse {
           width: 8px;
           height: 8px;
-          background: #9b73ff;
+          background: var(--primary);
           border-radius: 50%;
           animation: arc-pulse 1.8s infinite;
         }
@@ -125,10 +222,11 @@ export default function Home() {
         }
 
         .arc-gradient-text {
-          background: linear-gradient(100deg, #8858f5 10%, #ed67ad 55%, #ff9a68);
+          color: var(--primary);
+          background: linear-gradient(100deg, var(--primary-strong) 10%, var(--primary) 90%);
           -webkit-background-clip: text;
           background-clip: text;
-          color: transparent;
+          -webkit-text-fill-color: transparent;
         }
 
         .arc-description {
@@ -148,14 +246,16 @@ export default function Home() {
         }
 
         .arc-primary {
-          background: linear-gradient(110deg, #8b62f6, #b05df1);
-          box-shadow: 0 9px 22px #a67aef40;
+          background: var(--primary);
+          box-shadow: 0 9px 22px var(--glow);
         }
 
+        .arc-primary:hover { background: var(--primary-strong); }
+
         .arc-secondary {
-          background: white;
-          color: #45365f !important;
-          border: 1px solid #eae3f4;
+          background: var(--surface);
+          color: var(--ink) !important;
+          border: 1px solid var(--border);
         }
 
         .arc-social-proof {
@@ -163,7 +263,7 @@ export default function Home() {
           align-items: center;
           gap: 12px;
           margin-top: 28px;
-          color: #898198;
+          color: var(--muted);
           font-size: 12px;
         }
 
@@ -174,7 +274,7 @@ export default function Home() {
           width: 28px;
           height: 28px;
           margin-left: -4px;
-          border: 2px solid #fffaff;
+          border: 2px solid var(--bg);
           border-radius: 50%;
           font-size: 13px;
         }
@@ -193,14 +293,14 @@ export default function Home() {
           width: min(360px, 85%);
           aspect-ratio: 1;
           border-radius: 42% 58% 64% 36% / 43% 42% 58% 57%;
-          background: linear-gradient(140deg, #e8d8ff, #ffd9e9 55%, #ffedc9);
+          background: linear-gradient(140deg, var(--tint-3), var(--tint-2) 55%, var(--tint-1));
           animation: arc-morph 10s ease-in-out infinite alternate;
         }
 
         .arc-orb::before, .arc-orb::after {
           content: "";
           position: absolute;
-          border: 1px solid #fff9;
+          border: 1px solid var(--glass-line);
           border-radius: 50%;
           inset: 22px;
         }
@@ -210,10 +310,10 @@ export default function Home() {
         .arc-feature-card {
           width: min(320px, 83%);
           padding: 24px;
-          border: 1px solid #ffffffd9;
+          border: 1px solid var(--glass-line);
           border-radius: 25px;
-          background: #ffffffd9;
-          box-shadow: 0 22px 70px #61458b20;
+          background: var(--glass);
+          box-shadow: 0 22px 70px var(--shadow);
           backdrop-filter: blur(12px);
           animation: arc-float 5s ease-in-out infinite;
         }
@@ -226,14 +326,14 @@ export default function Home() {
         }
 
         .arc-card-label {
-          color: #8d83a0;
+          color: var(--muted);
           font-size: 10px;
           font-weight: 800;
           letter-spacing: 1.5px;
           text-transform: uppercase;
         }
 
-        .arc-sparkle { color: #ff9e52; font-size: 25px; }
+        .arc-sparkle { color: var(--primary); font-size: 25px; }
 
         .arc-avatar-row { display: flex; gap: 12px; margin-bottom: 18px; }
 
@@ -246,8 +346,8 @@ export default function Home() {
           font-size: 46px;
         }
 
-        .arc-avatar-one { background: linear-gradient(145deg, #eee3ff, #dcd0ff); }
-        .arc-avatar-two { background: linear-gradient(145deg, #ffe2ec, #ffcbdc); }
+        .arc-avatar-one { background: linear-gradient(145deg, var(--tint-1), var(--tint-2)); }
+        .arc-avatar-two { background: linear-gradient(145deg, var(--tint-2), var(--tint-3)); }
 
         .arc-match-title {
           margin: 0 0 7px;
@@ -257,7 +357,7 @@ export default function Home() {
 
         .arc-match-subtitle {
           margin: 0;
-          color: #817890;
+          color: var(--muted);
           font-size: 12px;
           line-height: 1.7;
         }
@@ -267,8 +367,8 @@ export default function Home() {
         .arc-tag {
           padding: 7px 10px;
           border-radius: 999px;
-          background: #f3edff;
-          color: #7955bd;
+          background: var(--tint-1);
+          color: var(--primary-strong);
           font-size: 10px;
           font-weight: 700;
         }
@@ -277,10 +377,10 @@ export default function Home() {
           position: absolute;
           display: grid;
           place-items: center;
-          border: 1px solid #ffffffc9;
+          border: 1px solid var(--glass-line);
           border-radius: 19px;
-          background: #ffffffd9;
-          box-shadow: 0 12px 35px #76569b20;
+          background: var(--glass);
+          box-shadow: 0 12px 35px var(--shadow);
           animation: arc-float 4s ease-in-out infinite;
         }
 
@@ -289,7 +389,7 @@ export default function Home() {
           right: 8%;
           width: 63px;
           height: 63px;
-          color: #ffab51;
+          color: var(--primary-light);
           font-size: 33px;
           animation-delay: -1s;
         }
@@ -299,7 +399,7 @@ export default function Home() {
           left: 3%;
           width: 67px;
           height: 67px;
-          color: #ed70a8;
+          color: var(--primary);
           font-size: 31px;
           animation-delay: -2s;
         }
@@ -309,7 +409,7 @@ export default function Home() {
           left: 3%;
           width: 46px;
           height: 46px;
-          color: #8e6bf5;
+          color: var(--primary-strong);
           font-size: 23px;
           animation-delay: -1.5s;
         }
@@ -319,15 +419,15 @@ export default function Home() {
           bottom: 65px;
           width: 48px;
           height: 48px;
-          color: #50bfa8;
+          color: var(--muted);
           font-size: 24px;
           animation-delay: -3s;
         }
 
         .arc-features {
           padding: 66px 28px 76px;
-          background: white;
-          border-top: 1px solid #f1eaf8;
+          background: var(--surface);
+          border-top: 1px solid var(--border);
         }
 
         .arc-section-inner { max-width: 1100px; margin: auto; }
@@ -342,7 +442,7 @@ export default function Home() {
 
         .arc-section-heading p {
           margin: 0;
-          color: #817890;
+          color: var(--muted);
           font-size: 14px;
           line-height: 1.8;
         }
@@ -355,15 +455,15 @@ export default function Home() {
 
         .arc-info-card {
           padding: 25px;
-          border: 1px solid #eee7f5;
+          border: 1px solid var(--border);
           border-radius: 23px;
-          background: #fff;
+          background: var(--surface);
           transition: transform .25s, box-shadow .25s;
         }
 
         .arc-info-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 16px 35px #6b4a8c10;
+          box-shadow: 0 16px 35px var(--shadow);
         }
 
         .arc-info-icon {
@@ -383,7 +483,7 @@ export default function Home() {
 
         .arc-info-card p {
           margin: 0;
-          color: #817890;
+          color: var(--muted);
           font-size: 13px;
           line-height: 1.8;
         }
@@ -393,7 +493,7 @@ export default function Home() {
           padding: 43px 25px;
           border-radius: 28px;
           text-align: center;
-          background: linear-gradient(115deg, #f0e8ff, #ffe8f0 60%, #fff0d8);
+          background: linear-gradient(115deg, var(--tint-2), var(--tint-1) 60%, var(--bg));
         }
 
         .arc-bottom-cta h2 {
@@ -404,7 +504,7 @@ export default function Home() {
 
         .arc-bottom-cta p {
           margin: 0 0 23px;
-          color: #766b86;
+          color: var(--ink);
           font-size: 14px;
           line-height: 1.8;
         }
@@ -417,11 +517,11 @@ export default function Home() {
           align-items: center;
           justify-content: space-between;
           gap: 15px;
-          color: #898198;
+          color: var(--muted);
           font-size: 12px;
         }
 
-        .arc-footer a { color: #716286; font-weight: 700; }
+        .arc-footer a { color: var(--ink); font-weight: 700; }
 
         @keyframes arc-float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -434,8 +534,8 @@ export default function Home() {
         }
 
         @keyframes arc-pulse {
-          0%, 100% { box-shadow: 0 0 0 0 #9b73ff70; }
-          50% { box-shadow: 0 0 0 6px #9b73ff00; }
+          0%, 100% { box-shadow: 0 0 0 0 var(--glow); }
+          50% { box-shadow: 0 0 0 6px transparent; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -525,9 +625,9 @@ export default function Home() {
 
           <div className="arc-social-proof">
             <div className="arc-dots" aria-hidden="true">
-              <span className="arc-dot" style={{ background: "#FFE0B9" }}>🌼</span>
-              <span className="arc-dot" style={{ background: "#E5D9FF" }}>🪻</span>
-              <span className="arc-dot" style={{ background: "#FFDCE8" }}>🌸</span>
+              <span className="arc-dot" style={{ background: "var(--tint-1)" }}>🌼</span>
+              <span className="arc-dot" style={{ background: "var(--tint-2)" }}>🪻</span>
+              <span className="arc-dot" style={{ background: "var(--tint-3)" }}>🌸</span>
             </div>
             <span>Made for curious minds and unique interests.</span>
           </div>
@@ -578,7 +678,7 @@ export default function Home() {
             <article className="arc-info-card">
               <div
                 className="arc-info-icon"
-                style={{ background: "#F0E7FF" }}
+                style={{ background: "var(--tint-1)" }}
                 aria-hidden="true"
               >
                 ✨
@@ -593,7 +693,7 @@ export default function Home() {
             <article className="arc-info-card">
               <div
                 className="arc-info-icon"
-                style={{ background: "#FFE6EF" }}
+                style={{ background: "var(--tint-2)" }}
                 aria-hidden="true"
               >
                 💗
@@ -608,7 +708,7 @@ export default function Home() {
             <article className="arc-info-card">
               <div
                 className="arc-info-icon"
-                style={{ background: "#E0F8F0" }}
+                style={{ background: "var(--tint-3)" }}
                 aria-hidden="true"
               >
                 🪄

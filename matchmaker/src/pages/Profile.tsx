@@ -5,11 +5,32 @@ export default function Profile() {
     <main className="profile-page">
       <style>{`
         .profile-page {
+          /* Same palette as the home page */
+          --bg: #F6FBF7;
+          --surface: #FFFFFF;
+          --ink: #14261C;
+          --muted: #5F7367;
+          --primary: #2F7D57;          /* placeholder – swap in your Primary hex */
+          --primary-strong: #1F5C3F;
+          --tint-1: #E6F2EA;
+          --tint-2: #D3E8DA;
+          --tint-3: #BFDDC9;
+          --border: #D8E8DD;
+
           min-height: 100vh;
           padding: 48px 24px;
-          color: #252044;
-          background: linear-gradient(135deg, #fff5e8, #f4eaff, #e6faff);
+          color-scheme: light;
+          color: var(--ink);
+          background: linear-gradient(135deg, var(--bg), var(--tint-1));
           font-family: inherit;
+        }
+
+        .profile-page * { box-sizing: border-box; }
+
+        /* Shield the page from global/dark-mode styles that turn text white.
+           Must stay above the component rules. */
+        .profile-page :where(h1, h2, h3, h4, h5, h6, p, span, div, li, small, strong, em, label, section, header, nav) {
+          color: inherit;
         }
 
         .profile-container {
@@ -29,12 +50,12 @@ export default function Profile() {
         .profile-brand {
           font-size: 1.4rem;
           font-weight: 900;
-          color: #7047eb;
+          color: var(--primary-strong);
           text-decoration: none;
         }
 
         .profile-back {
-          color: #7047eb;
+          color: var(--primary-strong);
           text-decoration: none;
           font-weight: 700;
         }
@@ -45,23 +66,24 @@ export default function Profile() {
 
         .profile-heading h1 {
           margin: 0 0 12px;
+          color: var(--ink);
           font-size: clamp(2.5rem, 7vw, 4rem);
           font-weight: 900;
           letter-spacing: -0.05em;
         }
 
         .profile-heading p {
-          color: #706982;
+          color: var(--muted);
           font-size: 1.05rem;
           line-height: 1.7;
         }
 
         .profile-panel {
           padding: clamp(24px, 5vw, 40px);
-          background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(112, 71, 235, 0.12);
+          background: var(--surface);
+          border: 1px solid var(--border);
           border-radius: 28px;
-          box-shadow: 0 20px 60px rgba(67, 43, 120, 0.08);
+          box-shadow: 0 20px 60px rgba(20, 38, 28, 0.08);
         }
 
         .profile-avatar {
@@ -71,18 +93,19 @@ export default function Profile() {
           margin-bottom: 22px;
           place-items: center;
           border-radius: 26px;
-          background: linear-gradient(135deg, #a78bfa, #f9a8d4);
+          background: linear-gradient(135deg, var(--tint-2), var(--tint-3));
           font-size: 2.5rem;
         }
 
         .profile-panel h2 {
           margin: 0 0 10px;
+          color: var(--ink);
           font-size: 1.6rem;
           font-weight: 850;
         }
 
         .profile-panel p {
-          color: #706982;
+          color: var(--muted);
           line-height: 1.7;
         }
 
@@ -99,8 +122,8 @@ export default function Profile() {
           align-items: center;
           padding: 13px 20px;
           border-radius: 14px;
-          background: #7047eb;
-          color: white;
+          background: var(--primary);
+          color: var(--surface);
           font-weight: 800;
           text-decoration: none;
           transition: transform 160ms ease, box-shadow 160ms ease;
@@ -108,12 +131,29 @@ export default function Profile() {
 
         .profile-button:hover {
           transform: translateY(-3px);
-          box-shadow: 0 10px 24px rgba(112, 71, 235, 0.22);
+          background: var(--primary-strong);
+          box-shadow: 0 10px 24px rgba(47, 125, 87, 0.25);
         }
 
         .profile-button.secondary {
-          background: #f0eaff;
-          color: #7047eb;
+          background: var(--tint-1);
+          color: var(--primary-strong);
+        }
+
+        .profile-button.secondary:hover {
+          background: var(--tint-2);
+        }
+
+        .profile-brand:focus-visible,
+        .profile-back:focus-visible,
+        .profile-button:focus-visible {
+          outline: 2px solid var(--primary);
+          outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .profile-button { transition: none; }
+          .profile-button:hover { transform: none; }
         }
       `}</style>
 
