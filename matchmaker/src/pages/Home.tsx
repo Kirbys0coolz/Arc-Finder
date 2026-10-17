@@ -606,8 +606,8 @@ export default function Home() {
         <nav className="arc-nav-links" aria-label="Main navigation">
           <a href="#features">Discover</a>
           <a href="/profile">Profile</a>
-          <a className="arc-nav-cta" href="/matches">
-            Find matches <span aria-hidden="true">↗</span>
+          <a className="arc-nav-cta" href="/login">
+            Login <span aria-hidden="true">↗</span>
           </a>
         </nav>
       </header>
