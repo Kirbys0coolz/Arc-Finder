@@ -1,3 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons'
+
+
+
 export default function Home() {
   return (
     <main className="arc-home">
@@ -662,8 +667,13 @@ export default function Home() {
             </div>
 
             <div className="arc-avatar-row" aria-hidden="true">
-              <div className="arc-avatar arc-avatar-one">🌙</div>
-              <div className="arc-avatar arc-avatar-two">☀️</div>
+              <div className="arc-avatar arc-avatar-one">
+                <FontAwesomeIcon icon={faThumbsUp} />
+
+              </div>
+              <div className="arc-avatar arc-avatar-two">
+                <FontAwesomeIcon icon={faThumbsDown} />
+              </div>
             </div>
 
             <h2 className="arc-match-title">Your kind of connection.</h2>
