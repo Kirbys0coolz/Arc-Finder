@@ -1,5 +1,6 @@
 export type Profile = {
   id: string
+  user_id: string | null
   name: string
   bio: string
   interests: string[]      // sports
@@ -8,7 +9,7 @@ export type Profile = {
   availability: string[]
 }
 
-export type NewProfile = Omit<Profile, 'id'>
+export type NewProfile = Omit<Profile, 'id' | 'user_id'>
 
 export type Match = Profile & {
   similarity: number

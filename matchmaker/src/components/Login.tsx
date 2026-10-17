@@ -1,37 +1,58 @@
-// Save this file as: matchmaker/src/components/Login.tsx
-
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { getMyProfile } from '../lib/profiles'
 
 export default function Login() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const [isError, setIsError] = useState(false)
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-
     setLoading(true)
     setMessage('')
+    setIsError(false)
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: window.location.origin,
-      },
-    })
+    if (mode === 'signup') {
+      const { data, error } = await supabase.auth.signUp({ email, password })
+
+      if (error) {
+        setIsError(true)
+        setMessage(error.message)
+        setLoading(false)
+        return
+      }
+
+      // No session means "Confirm email" is still on in Supabase
+      if (!data.session) {
+        setMessage('Check your email to confirm your account, then log in.')
+        setLoading(false)
+        return
+      }
+
+      // A brand-new account has no profile yet
+      navigate('/profile')
+      return
+    }
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
     if (error) {
       setIsError(true)
-      setMessage(`Something went wrong: ${error.message}`)
-    } else {
-      setIsError(false)
-      setMessage(`We sent a login link to ${email}. Open it on this device to sign in.`)
+      setMessage(error.message)
+      setLoading(false)
+      return
     }
 
-    setLoading(false)
+    // Returning users go to their matches, new users to the profile form
+    const profile = await getMyProfile()
+    navigate(profile ? '/matches' : '/profile')
   }
 
   return (
@@ -40,7 +61,6 @@ export default function Login() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
         .arc-login {
-          /* ── Palette (same as the home page) ── */
           --bg: #F6FBF7;
           --surface: #FFFFFF;
           --ink: #14261C;
@@ -48,7 +68,6 @@ export default function Login() {
           --primary: #2F7D57;
           --accent: #FACC15;
 
-          /* Derived shades */
           --primary-strong: #1F5C3F;
           --primary-light: #3E9A6B;
           --tint-1: #E6F2EA;
@@ -60,8 +79,6 @@ export default function Login() {
           --glass: rgba(255, 255, 255, .88);
           --glass-line: rgba(255, 255, 255, .7);
 
-          /* Fill the whole screen in one color, top to bottom,
-             with the footer pushed to the bottom */
           min-height: 100vh;
           display: flex;
           flex-direction: column;
@@ -78,7 +95,6 @@ export default function Login() {
         }
         .arc-login a { text-decoration: none; }
 
-        /* ── Top bar (matches home) ── */
         .arc-nav {
           width: 100%;
           max-width: 1160px;
@@ -151,7 +167,6 @@ export default function Login() {
           outline-offset: 3px;
         }
 
-        /* ── Middle: login card over a morphing orb ── */
         .arc-login-stage {
           flex: 1;
           position: relative;
@@ -287,7 +302,23 @@ export default function Login() {
         .arc-message-ok  { background: var(--tint-1); border: 1px solid var(--border); color: var(--ink); }
         .arc-message-err { background: #FEF2F2; border: 1px solid #FECACA; color: #991B1B; }
 
-        /* ── Footer (matches home) ── */
+        .arc-switch {
+          margin: 18px 0 0;
+          text-align: center;
+          color: var(--muted);
+          font-size: 13px;
+        }
+        .arc-switch button {
+          border: 0;
+          background: none;
+          padding: 0;
+          color: var(--primary);
+          font: inherit;
+          font-weight: 700;
+          cursor: pointer;
+        }
+        .arc-switch button:hover { color: var(--primary-strong); text-decoration: underline; }
+
         .arc-footer {
           width: 100%;
           max-width: 1160px;
@@ -301,7 +332,6 @@ export default function Login() {
           font-size: 12px;
         }
 
-        /* ── Animations ── */
         @keyframes arc-float {
           0%, 100% { transform: translateY(0) rotate(0deg); }
           50% { transform: translateY(-12px) rotate(2deg); }
@@ -370,15 +400,18 @@ export default function Login() {
         <form className="arc-card" onSubmit={handleSubmit}>
           <div className="arc-pill">
             <span className="arc-pulse" />
-            WELCOME BACK
+            {mode === 'signin' ? 'WELCOME BACK' : 'JOIN THE ARC'}
           </div>
 
           <h1 className="arc-card-title">
-            Log in to find your <span className="arc-gradient-text">next favorite.</span>
+            {mode === 'signin' ? 'Log in to find your ' : 'Sign up to find your '}
+            <span className="arc-gradient-text">next favorite.</span>
           </h1>
 
           <p className="arc-card-text">
-            Enter your email and we'll send you a link. No password needed.
+            {mode === 'signin'
+              ? 'Enter your email and password to pick up where you left off.'
+              : 'Create an account with your email and a password of at least 6 characters.'}
           </p>
 
           <div className="arc-field">
@@ -394,15 +427,29 @@ export default function Login() {
             />
           </div>
 
+          <div className="arc-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="At least 6 characters"
+              required
+              minLength={6}
+              autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
           <button type="submit" className="arc-button arc-primary" disabled={loading}>
             {loading ? (
               <>
                 <span className="arc-spinner" aria-hidden="true" />
-                Sending...
+                {mode === 'signin' ? 'Logging in...' : 'Creating account...'}
               </>
             ) : (
               <>
-                Send login link <span aria-hidden="true">✦</span>
+                {mode === 'signin' ? 'Log in' : 'Create account'} <span aria-hidden="true">✦</span>
               </>
             )}
           </button>
@@ -415,6 +462,20 @@ export default function Login() {
               {message}
             </p>
           )}
+
+          <p className="arc-switch">
+            {mode === 'signin' ? 'New here? ' : 'Already have an account? '}
+            <button
+              type="button"
+              onClick={() => {
+                setMode(mode === 'signin' ? 'signup' : 'signin')
+                setMessage('')
+                setIsError(false)
+              }}
+            >
+              {mode === 'signin' ? 'Create an account' : 'Log in'}
+            </button>
+          </p>
         </form>
       </section>
 
