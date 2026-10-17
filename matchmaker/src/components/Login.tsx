@@ -7,7 +7,7 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 // This is the connection to Supabase that you created in supabaseClient.ts.
 // The path goes up one folder (..) out of "components", then into "lib".
-import { supabase } from '../lib/SupabaseClient'
+import { supabase } from '../lib/supabase'
 
 export default function Login() {
   // "email" holds whatever is currently typed in the input box.
