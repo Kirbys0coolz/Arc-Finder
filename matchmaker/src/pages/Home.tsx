@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp, faPersonSwimming, faTableTennis, faVolleyball, faUserGroup } from '@fortawesome/free-solid-svg-icons'
 
+
+
 export default function Home() {
   return (
     <main className="arc-home">
@@ -604,8 +606,8 @@ export default function Home() {
         <nav className="arc-nav-links" aria-label="Main navigation">
           <a href="#features">Discover</a>
           <a href="/profile">Profile</a>
-          <a className="arc-nav-cta" href="/Login">
-            Login <span aria-hidden="true">↗</span>
+          <a className="arc-nav-cta" href="/matches">
+            Find matches <span aria-hidden="true">↗</span>
           </a>
         </nav>
       </header>
@@ -614,7 +616,7 @@ export default function Home() {
         <div className="arc-hero-copy">
           <div className="arc-pill">
             <span className="arc-pulse" />
-            YOUR NEXT DISCOVERY STARTS HERE
+            YOUR NEXT GAME STARTS HERE
           </div>
 
           <h1 className="arc-title">
@@ -642,9 +644,14 @@ export default function Home() {
 
           <div className="arc-social-proof">
             <div className="arc-dots" aria-hidden="true">
-              <span className="arc-dot" style={{ background: "var(--tint-1)" }}>🌼</span>
-              <span className="arc-dot" style={{ background: "var(--tint-2)" }}>🪻</span>
-              <span className="arc-dot" style={{ background: "var(--tint-3)" }}>🌸</span>
+              <span className="arc-dot" style={{ background: "var(--tint-1)" }}>
+                <FontAwesomeIcon icon={faPersonSwimming} /></span>
+              <span className="arc-dot" style={{ background: "var(--tint-2)" }}>
+                <FontAwesomeIcon icon={faTableTennis} />
+              </span>
+              <span className="arc-dot" style={{ background: "var(--tint-3)" }}>
+                <FontAwesomeIcon icon={faVolleyball} />
+              </span>
             </div>
             <span>Made for curious minds and unique interests.</span>
           </div>
@@ -654,7 +661,7 @@ export default function Home() {
           <div className="arc-orb" />
 
           <div className="arc-floaty arc-floaty-star" aria-hidden="true">✦</div>
-          <div className="arc-floaty arc-floaty-heart" aria-hidden="true">♥</div>
+          <div className="arc-floaty arc-floaty-heart" aria-hidden="true">✮</div>
           <div className="arc-floaty arc-floaty-orbit" aria-hidden="true">✳</div>
           <div className="arc-floaty arc-floaty-spark" aria-hidden="true">✧</div>
 
@@ -703,7 +710,7 @@ export default function Home() {
                 style={{ background: "var(--tint-1)" }}
                 aria-hidden="true"
               >
-                ✨
+                <FontAwesomeIcon icon={faUserGroup} />
               </div>
               <h3>Discover your vibe</h3>
               <p>
@@ -718,7 +725,7 @@ export default function Home() {
                 style={{ background: "var(--tint-2)" }}
                 aria-hidden="true"
               >
-                💗
+                <FontAwesomeIcon icon={faUserGroup} />
               </div>
               <h3>Find your matches</h3>
               <p>
