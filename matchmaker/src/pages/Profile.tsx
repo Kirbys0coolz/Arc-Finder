@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faStar, faUser } from '@fortawesome/free-solid-svg-icons'
 export default function Profile() {
   return (
     <main className="profile-page">
@@ -169,7 +170,9 @@ export default function Profile() {
         </header>
 
         <section className="profile-panel">
-          <div className="profile-avatar" aria-hidden="true">🌈</div>
+          <div className="profile-avatar" aria-hidden="true">
+            <FontAwesomeIcon icon={faUser} />
+          </div>
           <h2>Welcome to your profile!</h2>
           <p>
             Your profile page is ready. Once your existing profile and database
@@ -179,7 +182,7 @@ export default function Profile() {
 
           <div className="profile-actions">
             <Link to="/matches" className="profile-button">
-              Find my matches ✨
+              Find my matches  
             </Link>
             <Link to="/" className="profile-button secondary">
               Explore Arc-Finder

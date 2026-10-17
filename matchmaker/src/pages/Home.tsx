@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbsDown, faThumbsUp, faPersonSwimming, faTableTennis, faVolleyball, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { faThumbsDown, faThumbsUp, faPersonSwimming, faTableTennis, faVolleyball, faUserGroup, faHeart, faBasketballBall } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -710,7 +710,7 @@ export default function Home() {
                 style={{ background: "var(--tint-1)" }}
                 aria-hidden="true"
               >
-                <FontAwesomeIcon icon={faUserGroup} />
+                <FontAwesomeIcon icon={faBasketballBall} />
               </div>
               <h3>Discover your vibe</h3>
               <p>
@@ -740,7 +740,7 @@ export default function Home() {
                 style={{ background: "var(--tint-3)" }}
                 aria-hidden="true"
               >
-                🪄
+                <FontAwesomeIcon icon={faHeart} />
               </div>
               <h3>Make it yours</h3>
               <p>
