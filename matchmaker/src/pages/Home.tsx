@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbsDown, faThumbsUp, faPersonSwimming, faTableTennis, faVolleyball, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+
 export default function Home() {
   return (
     <main className="arc-home">
