@@ -1,11 +1,29 @@
 .matches-page {
-width: 100%;
-min-height: 100vh;
-box-sizing: border-box;
-padding: 40px clamp(24px, 5vw, 80px) 64px;
-color: #252044;
-background: linear-gradient(135deg, #fff4e8, #f2eaff, #e4faff);
-font-family: inherit;
+  /* Same palette as the home and profile pages */
+  --bg: #F6FBF7;
+  --surface: #FFFFFF;
+  --ink: #14261C;
+  --muted: #5F7367;
+  --primary: #2F7D57;          /* placeholder – swap in your Primary hex */
+  --primary-strong: #1F5C3F;
+  --tint-1: #E6F2EA;
+  --tint-2: #D3E8DA;
+  --border: #D8E8DD;
+
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 40px clamp(24px, 5vw, 80px) 64px;
+  color-scheme: light;
+  color: var(--ink);
+  background: linear-gradient(135deg, var(--bg), var(--tint-1));
+  font-family: inherit;
+}
+
+/* Shield the page from global/dark-mode styles that turn text white.
+   Must stay above the rules below. */
+.matches-page :where(h1, h2, h3, h4, h5, h6, p, span, div, li, small, strong, em, label, section, header, nav) {
+  color: inherit;
 }
 
 .matches-nav {
@@ -18,22 +36,22 @@ font-family: inherit;
 }
 
 .matches-brand {
-  color: #7047eb;
+  color: var(--primary-strong);
   font-size: 1.4rem;
   font-weight: 900;
   text-decoration: none;
 }
 
 .matches-back {
-  color: #7047eb;
+  color: var(--primary-strong);
   font-weight: 750;
   text-decoration: none;
 }
 
 .matches-hero {
-width: 100%;
-max-width: 1100px;
-margin: 0 auto 48px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 48px;
 }
 
 .matches-eyebrow {
@@ -41,8 +59,8 @@ margin: 0 auto 48px;
   margin-bottom: 18px;
   padding: 8px 13px;
   border-radius: 999px;
-  background: #e8ddff;
-  color: #7047eb;
+  background: var(--tint-2);
+  color: var(--primary-strong);
   font-size: 0.8rem;
   font-weight: 850;
   letter-spacing: 0.06em;
@@ -50,6 +68,7 @@ margin: 0 auto 48px;
 
 .matches-hero h1 {
   margin: 0 0 18px;
+  color: var(--ink);
   font-size: clamp(2.7rem, 7vw, 5rem);
   font-weight: 950;
   letter-spacing: -0.055em;
@@ -57,26 +76,26 @@ margin: 0 auto 48px;
 }
 
 .matches-hero h1 span {
-  color: #7047eb;
+  color: var(--primary);
 }
 
 .matches-hero p,
 .matches-description {
-  color: #706982;
+  color: var(--muted);
   font-size: 1.08rem;
   line-height: 1.8;
 }
 
 .matches-panel {
-width: 100%;
-max-width: 1100px;
-box-sizing: border-box;
-margin: 0 auto;
-padding: clamp(24px, 5vw, 60px);
-border: 1px solid rgba(112, 71, 235, 0.12);
-border-radius: 30px;
-background: rgba(255, 255, 255, 0.88);
-box-shadow: 0 24px 70px rgba(67, 43, 120, 0.09);
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 60px);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  background: var(--surface);
+  box-shadow: 0 24px 70px rgba(20, 38, 28, 0.08);
 }
 
 .matches-illustration {
@@ -107,6 +126,7 @@ box-shadow: 0 24px 70px rgba(67, 43, 120, 0.09);
 
 .matches-panel h2 {
   margin: 0 0 12px;
+  color: var(--ink);
   text-align: center;
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 900;
@@ -132,25 +152,37 @@ box-shadow: 0 24px 70px rgba(67, 43, 120, 0.09);
   align-items: center;
   padding: 14px 21px;
   border-radius: 14px;
-  background: #7047eb;
-  color: white;
+  background: var(--primary);
+  color: var(--surface);
   font-weight: 850;
   text-decoration: none;
-  transition: transform 160ms ease;
+  transition: transform 160ms ease, background 160ms ease;
 }
 
 .matches-button:hover {
   transform: translateY(-3px);
+  background: var(--primary-strong);
 }
 
 .matches-button.secondary {
-  background: #f0eaff;
-  color: #7047eb;
+  background: var(--tint-1);
+  color: var(--primary-strong);
+}
+
+.matches-button.secondary:hover {
+  background: var(--tint-2);
+}
+
+.matches-brand:focus-visible,
+.matches-back:focus-visible,
+.matches-button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 .matches-note {
   margin-top: 22px;
-  color: #8a829d;
+  color: var(--muted);
   font-size: 0.88rem;
   text-align: center;
 }
@@ -158,5 +190,13 @@ box-shadow: 0 24px 70px rgba(67, 43, 120, 0.09);
 @media (prefers-reduced-motion: reduce) {
   .matches-illustration span {
     animation: none;
+  }
+
+  .matches-button {
+    transition: none;
+  }
+
+  .matches-button:hover {
+    transform: none;
   }
 }
