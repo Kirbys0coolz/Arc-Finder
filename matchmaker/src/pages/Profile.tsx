@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faUser } from '@fortawesome/free-solid-svg-icons'
+import { useAuth } from '../lib/auth-context'
+
 export default function Profile() {
   return (
     <main className="profile-page">
