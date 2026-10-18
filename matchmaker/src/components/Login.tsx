@@ -405,7 +405,7 @@ export default function Login() {
 
           <h1 className="arc-card-title">
             {mode === 'signin' ? 'Log in to find your ' : 'Sign up to find your '}
-            <span className="arc-gradient-text">next favorite.</span>
+            <span className="arc-gradient-text">next friend.</span>
           </h1>
 
           <p className="arc-card-text">
@@ -490,7 +490,7 @@ export default function Login() {
           </span>
           Arc-Finder
         </a>
-        <span>Made with a little curiosity and a lot of heart ♡</span>
+        <span>All rights reserved. 2026</span>
       </footer>
     </main>
   )
