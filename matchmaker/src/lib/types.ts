@@ -9,7 +9,7 @@ export type Profile = {
   availability: string[]
 }
 
-export type NewProfile = Omit<Profile, 'id' | 'user_id'>
+export type NewProfile = Omit<Profile, 'id'>
 
 export type Match = Profile & {
   similarity: number
