@@ -200,3 +200,217 @@
     transform: none;
   }
 }
+
+/* ── Match results ── */
+.match-state {
+  margin: 24px 0 0;
+  color: var(--muted);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.match-error {
+  margin: 24px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #FECACA;
+  border-radius: 14px;
+  background: #FEF2F2;
+  color: #991B1B;
+  font-weight: 600;
+  text-align: center;
+}
+
+.match-list {
+  display: grid;
+  gap: 18px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.match-list > li {
+  list-style: none;
+}
+
+.match-card {
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--surface);
+  box-shadow: 0 12px 36px rgba(20, 38, 28, 0.07);
+  color: var(--ink);
+  animation: match-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.match-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(20, 38, 28, 0.13);
+}
+
+/* Highlight the #1 result */
+.match-card-top {
+  border: 2px solid var(--primary);
+  background: linear-gradient(160deg, var(--tint-1), var(--surface) 55%);
+  box-shadow: 0 18px 50px rgba(47, 125, 87, 0.18);
+}
+
+.match-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.match-avatar {
+  display: grid;
+  flex: none;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light, #3E9A6B));
+  box-shadow: 0 8px 18px rgba(47, 125, 87, 0.28);
+  color: var(--surface);
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.match-id {
+  flex: 1;
+  min-width: 0;
+}
+
+.match-name {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.match-skill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #FEF3C7;
+  color: #92400E;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.match-badges {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.match-best {
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #FACC15;
+  color: #422006;
+  font-size: 0.72rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.match-rank {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.match-bio {
+  margin: 16px 0 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--tint-3, #BFDDC9);
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.7;
+}
+
+/* "Why you matched" as pills */
+.match-reasons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.match-reasons li {
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: var(--tint-1);
+  color: var(--primary-strong);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+
+.match-reasons li::before {
+  content: '✦ ';
+  color: var(--primary);
+}
+
+/* Plays / Looking for / Free */
+.match-details {
+  display: grid;
+  gap: 14px;
+  margin: 20px 0 0;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+
+.match-details dt {
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.match-details dd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 0;
+}
+
+.match-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--surface);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.match-chip-soft {
+  border: 1px solid var(--border);
+  background: #F1F5F2;
+  color: #3A4F42;
+  font-weight: 600;
+}
+
+@keyframes match-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .match-card { padding: 20px; }
+  .match-head { flex-wrap: wrap; }
+  .match-badges { flex-direction: row; align-items: center; margin-left: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .match-card { animation: none; transition: none; }
+  .match-card:hover { transform: none; }
+}
