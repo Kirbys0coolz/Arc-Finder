@@ -6,6 +6,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../lib/auth-context'
 import { createProfile } from '../lib/profiles'
 import { SPORT_GROUPS, SKILL_LEVELS, PLAY_STYLES, AVAILABILITY } from '../lib/options'
+import { supabase } from '../lib/supabase'
 
 // A row of clickable tags. Used for every group of options below.
 function Chips({
@@ -50,9 +51,31 @@ export default function Profile() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
 
+  // true while a returning user is editing their saved profile
+  const [isEditing, setIsEditing] = useState(false)
+
   // Add the value if it isn't selected, remove it if it is
   function toggle(list: string[], setList: (v: string[]) => void, value: string) {
     setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value])
+  }
+
+  // Edit button: copy the saved profile into the form fields, then show the form
+  function startEditing() {
+    if (!profile) return
+    setName(profile.name)
+    setBio(profile.bio)
+    setSports(profile.interests)
+    setSkill(profile.skill)
+    setPlayStyles(profile.play_styles)
+    setAvailability(profile.availability)
+    setError('')
+    setIsEditing(true)
+  }
+
+  // Cancel button: throw away the changes and go back to the summary
+  function cancelEditing() {
+    setError('')
+    setIsEditing(false)
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -70,17 +93,38 @@ export default function Profile() {
 
     setSubmitting(true)
     try {
-      await createProfile({
-        user_id: user.id, // links this profile to the logged-in account
-        name: name.trim(),
-        bio: bio.trim(),
-        interests: sports, // the "interests" column holds the sports
-        skill,
-        play_styles: playStyles,
-        availability,
-      })
-      await refreshProfile() // updates the shared state so every page sees the new profile
-      navigate('/matches')
+      if (profile) {
+        // Returning user: update their existing row instead of creating a new one.
+        // "profiles" must be the same table name that createProfile uses.
+        const { error: updateError } = await supabase
+          .from('profiles')
+          .update({
+            name: name.trim(),
+            bio: bio.trim(),
+            interests: sports,
+            skill,
+            play_styles: playStyles,
+            availability,
+          })
+          .eq('user_id', user.id) // only this user's own profile
+        if (updateError) throw updateError
+
+        await refreshProfile() // reload the saved profile so the summary shows the changes
+        setIsEditing(false) // go back to the summary
+      } else {
+        // First-time user: create the profile
+        await createProfile({
+          user_id: user.id, // links this profile to the logged-in account
+          name: name.trim(),
+          bio: bio.trim(),
+          interests: sports, // the "interests" column holds the sports
+          skill,
+          play_styles: playStyles,
+          availability,
+        })
+        await refreshProfile() // updates the shared state so every page sees the new profile
+        navigate('/matches')
+      }
     } catch (err) {
       const e = err as { code?: string; message?: string }
       if (e.code === '23505') {
@@ -376,7 +420,7 @@ export default function Profile() {
           {loading && <p>Loading your profile...</p>}
 
           {/* 2. Returning user: show their profile */}
-          {!loading && profile && (
+          {!loading && profile && !isEditing && (
             <>
               <h2>Welcome back, {profile.name}!</h2>
               {profile.bio && <p>{profile.bio}</p>}
@@ -406,15 +450,18 @@ export default function Profile() {
 
               <div className="profile-actions">
                 <Link to="/matches" className="profile-button">Find my matches</Link>
+                <button type="button" className="profile-button secondary" onClick={startEditing}>
+                  Edit profile
+                </button>
                 <Link to="/" className="profile-button secondary">Explore Arc-Finder</Link>
               </div>
             </>
           )}
 
-          {/* 3. First-time user: show the form */}
-          {!loading && !profile && (
+          {/* 3. First-time user, or a returning user who clicked Edit: show the form */}
+          {!loading && (!profile || isEditing) && (
             <>
-              <h2>Create your profile</h2>
+              <h2>{profile ? 'Edit your profile' : 'Create your profile'}</h2>
               <p>Pick what fits you. You'll be matched with people who play the same things at similar times.</p>
 
               <form className="profile-form" onSubmit={handleSubmit}>
@@ -485,8 +532,18 @@ export default function Profile() {
 
                 <div className="profile-actions">
                   <button type="submit" className="profile-button" disabled={submitting}>
-                    {submitting ? 'Saving...' : 'Create my profile'}
+                    {submitting ? 'Saving...' : profile ? 'Save changes' : 'Create my profile'}
                   </button>
+                  {profile && (
+                    <button
+                      type="button"
+                      className="profile-button secondary"
+                      onClick={cancelEditing}
+                      disabled={submitting}
+                    >
+                      Cancel
+                    </button>
+                  )}
                 </div>
               </form>
             </>
