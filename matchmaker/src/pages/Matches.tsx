@@ -57,9 +57,7 @@ export default function Matches() {
           </Link>
         </div>
 
-        <p className="matches-note">
-          Real match results aren't connected to this page yet.
-        </p>
+
       </section>
     </main>
   )
