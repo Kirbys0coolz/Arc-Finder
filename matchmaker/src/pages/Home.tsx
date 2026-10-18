@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbsDown, faThumbsUp, faPersonSwimming, faTableTennis, faVolleyball, faUserGroup, faHeart, faBasketballBall } from '@fortawesome/free-solid-svg-icons'
-
+import { Link } from 'react-router-dom'
+import { useAuth } from '../lib/auth-context'
 
 
 export default function Home() {
