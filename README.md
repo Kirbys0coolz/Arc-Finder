@@ -110,4 +110,4 @@ npx tsx scripts/test-match.ts "Alex"   # top matches for a profile, plus sanity 
 - [Drew Layfield](https://github.com/DrewL13): Back-End Database
 - [Delilah Rodriguez](https://github.com/Kirbys0coolz): Front-End
 - [Srikar Dhanireddy](https://github.com/SrikarD258): Back-End Login
-- [Daniel Sohn](https://github.com/Daniel): Front-End
+- Daniel Sohn: Front-End
