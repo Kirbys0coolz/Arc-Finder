@@ -414,3 +414,30 @@
   .match-card { animation: none; transition: none; }
   .match-card:hover { transform: none; }
 }
+
+.match-actions { margin-top: 20px; }
+
+.match-message {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--primary);
+  color: var(--surface);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.match-message:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--primary-strong);
+}
+
+.match-message:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.match-offline {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}

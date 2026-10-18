@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import type { CSSProperties } from 'react'
 import './Matches.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBaseballBatBall, faFutbol, faPersonHiking } from '@fortawesome/free-solid-svg-icons'
@@ -7,14 +7,32 @@ import { useAuth } from '../lib/auth-context'
 import { getAllProfiles } from '../lib/profiles'
 import { rankMatches } from '../lib/match'
 import type { Match } from '../lib/types'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { getOrCreateConversation } from '../lib/chat'
 
 export default function Matches() {
   // "profile" is the logged-in user's own row in the profiles table
-  const { profile, loading } = useAuth()
-
+  const { user, profile, loading } = useAuth()
   const [matches, setMatches] = useState<Match[]>([])
   const [fetching, setFetching] = useState(true)
   const [error, setError] = useState('')
+
+  const navigate = useNavigate()
+  const [startingId, setStartingId] = useState<string | null>(null)
+  const [chatError, setChatError] = useState('')
+
+  async function startChat(m: Match) {
+    if (!user || !m.user_id || startingId) return
+    setStartingId(m.id)
+    setChatError('')
+    try {
+      const conversationId = await getOrCreateConversation(user.id, m.user_id)
+      navigate(`/chat/${conversationId}`)
+    } catch {
+      setChatError('Could not start the chat. Please try again.')
+      setStartingId(null)
+    }
+  }
 
   useEffect(() => {
     if (!profile) return
@@ -94,6 +112,8 @@ export default function Matches() {
 
         {error && <p className="match-error" role="alert">{error}</p>}
 
+        {chatError && <p className="match-error" role="alert">{chatError}</p>}
+
         {!busy && !error && matches.length === 0 && (
           <p className="match-state">
             Nobody shares a sport with you right now. Add more sports to your
@@ -102,32 +122,79 @@ export default function Matches() {
         )}
 
         {!busy && !error && matches.length > 0 && (
-          <ol className="match-list">
+          <ul className="match-list">
             {matches.map((m, i) => (
-              <li key={m.id}>
-                <article className="match-card">
-                  <div className="match-top">
-                    <div className="match-who">
-                      <span className="match-rank" aria-hidden="true">{i + 1}</span>
+              <li key={m.id} style={{ '--i': i } as CSSProperties}>
+                <article className={`match-card ${i === 0 ? 'match-card-top' : ''}`}>
+                  <header className="match-head">
+                    <span className="match-avatar" aria-hidden="true">
+                      {m.name.trim().charAt(0).toUpperCase()}
+                    </span>
+
+                    <div className="match-id">
                       <h3 className="match-name">{m.name}</h3>
+                      <span className="match-skill">{m.skill}</span>
                     </div>
-                  </div>
 
-                  {m.bio && <p className="match-bio">{m.bio}</p>}
+                    <div className="match-badges">
+                      {i === 0 && <span className="match-best">★ Best match</span>}
+                      <span className="match-rank">#{i + 1}</span>
+                    </div>
+                  </header>
 
-                  <p className="match-label">Why you matched</p>
+                  {m.bio && <p className="match-bio">“{m.bio}”</p>}
+
                   <ul className="match-reasons">
-                    {m.reasons.map((r) => <li key={r}>{r}</li>)}
+                    {m.reasons.map((r) => (
+                      <li key={r}>{r}</li>
+                    ))}
                   </ul>
 
-                  <p className="match-label">Plays</p>
-                  <div className="match-chips">
-                    {m.interests.map((s) => <span key={s} className="match-chip">{s}</span>)}
+                  <dl className="match-details">
+                    <div>
+                      <dt>Plays</dt>
+                      <dd>
+                        {m.interests.map((s) => (
+                          <span key={s} className="match-chip">{s}</span>
+                        ))}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Looking for</dt>
+                      <dd>
+                        {m.play_styles.map((s) => (
+                          <span key={s} className="match-chip match-chip-soft">{s}</span>
+                        ))}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Free</dt>
+                      <dd>
+                        {m.availability.map((s) => (
+                          <span key={s} className="match-chip match-chip-soft">{s}</span>
+                        ))}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className="match-actions">
+                    {m.user_id ? (
+                      <button
+                        type="button"
+                        className="match-message"
+                        onClick={() => startChat(m)}
+                        disabled={startingId !== null}
+                      >
+                        {startingId === m.id ? 'Opening chat...' : 'Message'}
+                      </button>
+                    ) : (
+                      <span className="match-offline">Demo profile · not on chat</span>
+                    )}
                   </div>
                 </article>
               </li>
             ))}
-          </ol>
+          </ul>
         )}
 
         <div className="matches-actions">
@@ -138,8 +205,6 @@ export default function Matches() {
             Back to home
           </Link>
         </div>
-
-
       </section>
     </main>
   )

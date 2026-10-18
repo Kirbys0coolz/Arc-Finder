@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Matches from './pages/Matches'
 import RequireAuth from './components/RequireAuth'
+import Chat from './pages/chat'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/matches" element={<Matches />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/chat/:conversationId" element={<RequireAuth><Chat /></RequireAuth>} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
