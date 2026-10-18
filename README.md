@@ -107,7 +107,7 @@ npx tsx scripts/test-match.ts "Alex"   # top matches for a profile, plus sanity 
 
 ## Team
 
-- [Drew Layfield](https://github.com/username): Back-End Database
-- [Delilah Rodriguez](https://github.com/username): Front-End
-- [Srikar Dhanireddy](https://github.com/username): Back-End Login
-- [Daniel Sohn](https://github.com/username): Front-End
+- [Drew Layfield](https://github.com/DrewL13): Back-End Database
+- [Delilah Rodriguez](https://github.com/Kirbys0coolz): Front-End
+- [Srikar Dhanireddy](https://github.com/SrikarD258): Back-End Login
+- [Daniel Sohn](https://github.com/Daniel): Front-End
