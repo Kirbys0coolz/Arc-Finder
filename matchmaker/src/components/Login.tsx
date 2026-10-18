@@ -205,7 +205,7 @@ export default function Login() {
           animation: arc-float 4s ease-in-out infinite;
         }
         .arc-floaty-1 { top: 12%; left: 14%; width: 60px; height: 60px; color: var(--primary); font-size: 30px; }
-        .arc-floaty-2 { top: 18%; right: 14%; width: 50px; height: 50px; color: #CA9A04; font-size: 24px; animation-delay: -1.5s; }
+        .arc-floaty-2 { top: 18%; right: 14%; width: 50px; height: 50px; color: var(--primary-strong); font-size: 24px; animation-delay: -1.5s; }
         .arc-floaty-3 { bottom: 14%; right: 18%; width: 64px; height: 64px; color: var(--primary-strong); font-size: 30px; animation-delay: -2.5s; }
         .arc-floaty-4 { bottom: 18%; left: 16%; width: 46px; height: 46px; color: var(--muted); font-size: 22px; animation-delay: -1s; }
 

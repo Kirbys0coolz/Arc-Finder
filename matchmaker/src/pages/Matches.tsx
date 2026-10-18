@@ -23,12 +23,13 @@ export default function Matches() {
         <h1>
           Find your
           <br />
-          <span>kind of magic.</span>
+          <span>kind of sport.</span>
         </h1>
 
         <p>
           Discover your next match with Arc-Finder. Your journey starts with
-          exploring the profiles and preferences that make you uniquely you.
+          exploring your preferences and interests, and finding the right connections to enhance your
+           sporting experience. Whether you're looking for a new teammate, a friendly opponent, or just someone to share your passion for the game, Arc-Finder is here to help you make those connections.
         </p>
       </section>
 
